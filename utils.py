@@ -49,6 +49,12 @@ def angle_of_arrival(coords1, coords2):
     x2, y2 = coords2
     return np.arctan2(y2 - y1, x2 - x1)
 
+# calculate BER between two signals
+def ber(s1, s2):
+    """Compute the bit error rate (BER) between two signals."""
+    return np.sum(s1 != s2) / len(s1)
+
+
 
 # generate a BPSK signal 
 def generate_bpsk(N):

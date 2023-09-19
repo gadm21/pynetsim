@@ -44,7 +44,23 @@ class NetSim (object) :
 
 
 
-def transmit(node1, node2, P_t) : 
+def transmit(node1, node2, P_t, P_n) :
+
+    # transmit signal from node1 to node2
+    # P_t = transmit power (W)
+    # P_n = noise power (W)
+    # node1 = transmitting node
+    # node2 = receiving node
+    # 
+    # steps:
+    # 1. compute distance between nodes
+    # 2. compute angle of arrival
+    # 3. compute path loss
+    # 4. generate channel coefficients
+    # 5. compute beamforming weights
+    # 6. compute received signal
+    # 7. compute BER
+    # 8. return BER 
 
     distance = euclidean_distance(node1.coords, node2.coords)
     angle = angle_of_arrival(node1.coords, node2.coords)
@@ -58,4 +74,13 @@ def transmit(node1, node2, P_t) :
     # compute received signal
     signal = np.dot(w_rx, h * np.dot(w_tx, node1.signal))
     signal = np.sqrt(P_t) * signal / np.sqrt(PL)
+
+    # compute noise
+    noise = np.random.randn(node2.N) + 1j*np.random.randn(node2.N)
+    noise = np.sqrt(P_n) * noise / np.sqrt(PL)
+
+    # compute BER
+    BER = ber(signal, noise)
+
+    return BER
     
